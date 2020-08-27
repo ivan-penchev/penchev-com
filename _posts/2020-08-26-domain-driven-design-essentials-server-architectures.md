@@ -29,4 +29,56 @@ What DDD is trying to do is separete the responsibilities, creating new objects,
 
 ## Server side architectures
 > **DDD is not only usable on the server, however our focus will lay in this area**
+Architecture on High-Level is when we have an application an we are talking how do the different elements of it communicate, persist data etc. A classical example of this is when we talk about Ecommerce site. You have a **Catalog**, **Shopping Cart**, **Product** and **Order** elements, high level architecture deals with things like 1) messages between elements for example via RabbitMQ, 2) caching, 3) Data persistent per elements, 4) use of External Services for example PDFPrinter, 5) Cloud Infrastructure for example via Docker/K8s and so forth.
+
+Architecture on Low-Level is when  we take one of those elements, for example the **Catalog**, and how to structure the code in it - how to separate the controllers, the business logic, the data ... etc. So a question arises what are the characteristics we looking for when we are designing our application low-level architecture.
+
 ### Elements of an architecture
+*Separation of Concerns* means every internal element of an application should be separated. We could for example have one file `Models.cs` containing all of our Models, but that is not ideal as that file will grew exponentially and maintaining it will be nightmarish. In other words each object should have clear responsibilities. *Encapsulation* on the other hand is a simple mechanism that we use to protect ourselves from creating/modifying objects in invalid state. Doing this leads to less bugs in our code. *Dependency Inversion* is decoupling of dependencies, so if I have a service that depends on the database I should use abstractions - interfaces instead of concrete implementation. This makes all dependencies interchangeable. ; *Explicit Components* is the idea that we know what a class does, what is the role of the class in the whole system, just by opening it - it's very clearly designed/named; *Single Responsibility* of the different software elements; *Don't Repeat Yourself* simply put don't copy/paste the same code in different elements; *Persistence & Infrastructure Ignorance* so my code works without caring what DB we use, or do we deploy this on a Virtual Machine or a k8s cluster; Similarly to the previous principle *Presentation Ignorance* dictates that the UI layer of the element should be easily interchangeable; 
+
+![contexts](({{ "/assets/img/soft-architectures/ddd/01/contexts.png" | relative_url }})
+
+Fig. 01 Example of contexts use from Martin Fowler
+
+*Bounded Contexts* is a central idea of DDD, its the the idea of how to deal with large models and teams. We do that by splitting them into different contexts and defining explicitly their interrelationships. In the example above, we can see that the interrelationships are the **customer** and **product** however each of the different teams (sales and support) has additional models about things they need information about. Sales is interested in who sold the product and via what sales pipeline, while Support is more interested in did that product have defects, how many issue tickets there are and so forth. **The key aspect is each of this contexts can work by itself - If we do not offer support, for example, then Sales should be able to function without it**. This is a brief overview and we will examine it indebt later on; *Testability* 
+
+| Principles                             | Classical Approach                          | DDD Approach |
+| -------------------------------------- | ------------------------------------------- | ------------ |
+| Separation of Concerns                 | not fully (Service layer when it grows)     | fully        |
+| Encapsulation                          | not fully (especially Entities from the DB) | fully        |
+| Dependency Inversion                   | fully                                       | fully        |
+| Explicit Components                    | fully                                       | fully        |
+| Single Responsibility                  | fully                                       | fully        |
+| Don't Repeat Yourself                  | fully                                       | fully        |
+| Persistence & Infrastructure Ignorance | not supported                               | fully        |
+| Presentation Ignorance                 | not supported                               | fully        |
+| Bounded Contexts                       | not supported                               | fully        |
+| Testability                            | fully                                       | fully        |
+
+### The classical approach
+
+![contexts](({{ "/assets/img/soft-architectures/ddd/01/3-tier.png" | relative_url }})
+
+Fig. 02 Example of generic 3 tier server architecture
+
+The classical approach (or also known as 3-Tier server architecture) is the idea that the database is the center of the application. So we setup the database and we start moving upwards, in other words we can not do anything until our database is designed.
+
+The biggest **pros** of why this is taught and used so widely, is its simplicity, the fact that most people understand it well and it covers a huge chunk of our architectural needs. Now talking about pros without **cons** is no balanced, so we need to mention that this is not a flexible architecture, it is designed for single presentation applications (before smartphones), it does not scale well - extracting microservices is a challenging task, and all dependencies are towards the database.
+
+### The Domain-Driven Design approach
+
+![contexts](({{ "/assets/img/soft-architectures/ddd/01/onion.png" | relative_url }})
+
+Fig. 03 Example of DDD onion architecture
+
+The domain-driven design approach is the idea that the business domain is the center of the application. So here a key idea is solving problems, understanding client needs and then writing the code. In order to do this we communicate with domain experts to design our solution. We do not care about the database, we do not care about the presentation, all this is just a detail. This approach has success with complex projects.
+
+The **pros** of this architecture are it's flexibility, the idea that the customer has better vision/perspective of the problem, the systematic path through a very complex problem, well organized and easily tested code, all the business logic lives in one place, and the option to leverage multiple patterns internally. Of course everything that sounds so cool comes with its **drawbacks**, as if such do not exist everyone would use this approach.  We need more time - to talk  and model the problem with the domain experts, to isolate domain logic from other parts of the application etc. The learning curve is huge - New principles, patterns, processes. The need for complexity - it makes no sense to use this for just CRUD or data-driven applications, it only makes sense to use it when there is complexity in the problem and not just technical complexity without business domain complexity.
+
+To sum it up:
+
+DDD is superior as it's scalable in terms of development (when our dev team increases), code has even better separation than the classical approach, it covers all of our architecture needs and it offers improved patterns and flexibility. On the other side it is only usable when the business logic is complex and it is more time-consuming as it needs more classes and relationships between them.
+
+DDD is not treating writing code as only part of  the equation needed to solve the problem, the other part is speaking with domain experts, so that we can use the same language in our code as in real life. Our domain model should literally scream (the term is *screaming architecture*) the business requirements and our classes and methods should describe the actual process. 
+
+## The Domain Model
