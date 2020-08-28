@@ -82,3 +82,68 @@ DDD is superior as it's scalable in terms of development (when our dev team incr
 DDD is not treating writing code as only part of  the equation needed to solve the problem, the other part is speaking with domain experts, so that we can use the same language in our code as in real life. Our domain model should literally scream (the term is *screaming architecture*) the business requirements and our classes and methods should describe the actual process. 
 
 ## The Domain Model
+
+The Domain Model is your organized and structured knowledge of the problem. The Domain Model should represent the vocabulary and key concepts of the problem domain and it should identify the relationships among all of the entities within the scope of the domain.
+
+The Domain Model itself could be a diagram, code examples or even written documentation of the problem. The important thing is, the Domain Model should also define the vocabulary around the project and should act as a communication tool for **everyone** involved. The *Ubiquitous Language* is an extremely important concept in Domain Driven Design and so it should be directly derived from the Domain Model.
+
+We will use the following generic document structure as our Domain Model
+
+> * Problem Domain
+>   * The problem your software is trying to solve
+>
+> * Core Domain
+>   * The part of the business that must be perfect, and cannot be outsourced
+>
+> * Sub-Domains
+>   * Separate business problems which can work isolated in theory
+>
+> * Bounded Context
+>   * A specific responsibility, with specific boundaries that separate it 
+>      from other parts of the solution
+>
+> * Shared Kernel
+>   * Part of the model, which is shared by two or more teams
+
+Let's take the above mentioned generic Domain Model and apply it to a Veterinary Clinic.
+
+> * Problem Domain 
+>   * We need a system for a veterinary clinic
+>
+> * Core Domain
+>   * Obviously, the business cannot exist without examinations and surgeries
+>
+> * Sub-Domains
+>   * Appointments, billing, visit records, medical records, etc.
+>
+> * Bounded Context
+>   * Appointments will need a Patient model, medical records too, but they are different
+>
+> * Shared Kernel
+>   * Clients are part of all domains
+
+So is that all? Are we done? Well not really, this is an iterative process, refining our domain model and it's done with domain experts. But what if we have created a startup and there are no domain experts on hand? Then you are the domain expert. 
+
+Continuing with our example, we sit down with the chief nurse and start talking as we need to talk with the client to understand the business needs.
+
+* Clients (people) schedule appointments for patients (pets) 
+* Appointments may be either office visits or surgeries 
+* Office visits may be an exam requiring a doctor, or a tech visit 
+* Office visits depend on exam room availability 
+* Surgeries depend on operational and recovery space availability, and can involve different kinds of procedures 
+* Different appointment types and procedures require different staff 
+
+Once at this point we have a bit better representation of what the normal business workflow is. Then we can start defining our primary models a bit better also.
+
+* Main models:
+  * **<u>Client</u>** can schedule a **<u>Patient</u>** (pet)
+  * **<u>Schedule</u>** is for **<u>Appointment</u>** or **<u>Surgery</u>**
+  * **<u>Appointment</u>** requires a **<u>Doctor</u>** and **<u>Exam Room</u>**
+  * **<u>Surgery</u>** requires a **<u>Doctor</u>**, an **<u>Operational Room</u>** and a **<u>Recovery Room</u>**
+
+* The above models define the appointments bounded context
+
+* The medical records bounded context will also require a **<u>Patient</u>** model
+  * But with different properties and operations
+
+Now that we have this common language, we need to transfer the domain models in the code. We already know that domain models are the heart of the software, but it is important to stress that they are not bound by technology. They are pure classes, that follow the SOLID principles, containing the business logic and business rules.
