@@ -3,7 +3,7 @@ title: Domain-driven design essentials - Server Architectures
 author: Ivan Penchev
 date: 2020-08-26 11:53:21 +0100
 categories: [Programming, Software Architectures]
-tags: [Domain-driven design, ASP.NET Core Mircroservices, DDD, Software Architectures]
+tags: [Domain-driven design, ASP.NET Core Microservices, DDD, Software Architectures]
 toc: true
 ---
 
@@ -11,6 +11,7 @@ toc: true
 ## Introduction
 In the last 10-20 years, a huge hype has accumulated around microservices and domain-driven design (DDD), and rightfully so. I am writing this body of articles as a way for me to lay down my exploration knowledge I have accrued on the topics and share it with other curious people.
 I will be focusing specifically on DDD, but we will also briefly talk about Mircroservices architectural style and why DDD and microservices compliment each other so well. To illustrate core topics two projects are provided, source code for which is located [here]({{ "/assets/src/ddd_example_projects.zip" | relative_url }}), a project about building a blog (simplistic project) and a project about building a car rental business (advance project).
+
 ### Resources
 A huge inspiration for me has been the work of Eric Evans, the so called ["Blue book"](https://www.amazon.com/exec/obidos/ASIN/0321125215/domainlanguag-20), Jimmy Boggard, Julie Lerman, and to a degree Martin Fowler.
 My advice for you is to check them out post reading this body of work, as their creation is not necessarily targeted at introductory level. The latter statement is especially valid for the Blue Book, even though I find the [non technical path](https://domainlanguage.com/ddd/nontechnical-path-through-the-book/attachment/pdf/) as a bit easier.
@@ -146,4 +147,160 @@ Once at this point we have a bit better representation of what the normal busine
 * The medical records bounded context will also require a **<u>Patient</u>** model
   * But with different properties and operations
 
-Now that we have this common language, we need to transfer the domain models in the code. We already know that domain models are the heart of the software, but it is important to stress that they are not bound by technology. They are pure classes, that follow the SOLID principles, containing the business logic and business rules.
+Now that we have this common language, we need to transfer the domain models in the code. We already know that domain models are the heart of the software, but it is important to stress that they are not bound by technology. They are pure classes, that follow the SOLID principles, containing the business logic and business rules. So when designing don't think about where are you going to persist them and how, don't think about databases, ORMs  etc.  our models should be persistence ignorant!
+
+### Identity of the Domain objects
+
+Domain objects are used to express the model, before we transition to them let's answer a "simple" question, how do we know if two objects are equal? To answer that let's revisit the types of equality you have in programming, these are identifier equality, value equality (also known as structural), and reference equality.
+
+* Identifier equality - Objects are equal, if their ID is equal
+
+* Structural equality - Objects are equal, if all their properties are equal
+
+* Reference equality - Objects are equal, if they use the same memory address
+
+Reference and structural equalities are pretty straight forward, however when talking about identifier equalities we have a couple of strategies we could use to generate those unique identifiers. 
+
+The standard "database identity" is usually integers which are autoincremented. This  works great, but you cannot have the value before saving the entity. Taking this in con in mind we have GUIDs we know those beforehand and we use them when we need the value before saving the entity, however this created a need for a separated indexed column, which makes them slowed than the Identities. And lastly we have [Hi/Lo (algorithm)]([https://en.wikipedia.org/wiki/Hi/Lo_algorithm#:~:text=Hi%2FLo%20is%20used%20in,universally%20unique%20identifiers%20(UUID).](https://en.wikipedia.org/wiki/Hi/Lo_algorithm#:~:text=Hi%2FLo is used in,universally unique identifiers (UUID).). the idea of this value generation strategy is that you know the values before saving the entities by using a sequences of available identities provided from the database. This works like identities, but since we ask for sequences the database is called less frequently.
+
+Knowing what is the domain model, what are the different equalities, what is identifier, and what are the different strategies for generating an identifier, our next logical step is towards the different type of objects in our domain.
+
+![contexts](({{ "/assets/img/soft-architectures/ddd/01/ddd-diagram-objects.png" | relative_url }})
+
+Fig. 04 DDD diagram for Domain objects
+
+### Entities
+
+Entities are pretty much the bread and butter of domain modeling. They are objects in our Domain Model with an identity and a lifecycle. The primary traits of entities is that they are objects that have an id, which are considered equal if those ids are equal. Entities have mutable state, of course if our domain model (business logic) permits that, and that mutability is done trough methods and behavior.  Keeping entities encapsulated with private setters and using public constructors only if those constructors are able to create object in <u>valid</u> state. If any collections exists in our entity those should be read-only. 
+
+> **<u>*!NB DDD Entity != EF Entity*</u>**
+
+``` CSharp
+C:\Car Dealers\Domain\Models\Dealers\Dealer.cs
+1 namespace CarRentalSystem.Domain.Models.Dealers
+2 {
+3     using System.Collections.Generic;
+4     using System.Linq;
+5     using CarAds;
+6     using Common;
+7     using Exceptions;
+8
+9     using static ModelConstants.Common;
+10
+11     public class Dealer : Entity<int>, IAggregateRoot
+12     {
+13         private readonly HashSet<CarAd> carAds;
+14
+15         internal Dealer(string name, string phoneNumber)
+16         {
+17             this.Validate(name);
+18
+19             this.Name = name;
+20             this.PhoneNumber = phoneNumber;
+21
+22             this.carAds = new HashSet<CarAd>();
+23         }
+24
+25         private Dealer(string name)
+26         {
+27             this.Name = name;
+28             this.PhoneNumber = default!;
+29
+30             this.carAds = new HashSet<CarAd>();
+31         }
+32
+33         public string Name { get; private set; }
+34
+35         public PhoneNumber PhoneNumber { get; private set; }
+36
+37         public Dealer UpdateName(string name)
+38         {
+39             this.Validate(name);
+40             this.Name = name;
+41
+42             return this;
+43         }
+44
+45         public Dealer UpdatePhoneNumber(string phoneNumber)
+46         {
+47             this.PhoneNumber = phoneNumber;
+48
+49             return this;
+50         }
+51
+52         public IReadOnlyCollection<CarAd> CarAds => this.carAds.ToList().AsReadOnly();
+53
+54         public void AddCarAd(CarAd carAd) => this.carAds.Add(carAd);
+55
+56         private void Validate(string name)
+57             => Guard.ForStringLength<InvalidDealerException>(
+58                 name,
+59                 MinNameLength,
+60                 MaxNameLength,
+61                 nameof(this.Name));
+62     }
+63 }
+```
+
+is a source code example of all the statements above. 
+
+#### Entities relationships
+
+When modeling in the classical approach we usually model things in a two-way relationships quite often. We say Article has Comments, and Comments has Article. We try to avoid this in DDD - do not use two-way relationships except in cases where it makes business sense. sense Because using a bidirectional relationship means that the objects can live only together. If possible use one-way relationships and avoid using foreign keys. This simplifies the design, and makes sure associations make business sense. 
+
+We will talk a bit more when we start discussion the Infrastructure, but let's just quickly mention (since panic ensures when you typically say do not put FK in a model), that we can have reusability and EF can use the domain models for the creation of the database, but we can also have a totally new classes which inherit the domain models. The important take here is, on the level of Domain we do not care about persistence, foreign keys, primary keys, at this layer we simply don't care about that. When we reach the persistent layer we will work with foreign keys and that will be outside the domain layer.
+
+### Value objects
+
+A Value Object is an immutable type that is distinguishable only by the state of its properties. That is, unlike an Entity, which has a unique identifier and remains distinct even if its properties are otherwise identical, two Value Objects with the exact same properties can be considered equal. Most importantly value objects are immutable and  cannot be changed once they are created. 
+
+#### Since they are immutable modifying one is conceptually the same as discarding the old one and creating a new one. Frequently, the Value Object can define helper methods (or extensions methods) that assist with such operations. The built-in string object in the .NET framework is a good example of an immutable type. Converting a string in some manner, such as making it uppercase via ToUpper(), doesn’t actually change the original string but rather creates a new string. Likewise, concatenating two strings doesn’t modify either original string, but rather creates a third one.
+
+A classical example to illustrate Value objects is Money
+
+```csharp
+public class Money
+{
+  public SomeValue(int amount, string currencyCode)
+  {
+    this.Amount = amount;
+    this.CurrencyCode = currencyCode;
+  }
+ 
+  public int Amount { get; private set; }
+  public string CurrencyCode { get; private set; }
+}
+```
+
+If we have an Ecommerce shop that has a product catalog, and each product has a price and currency, if we just leave it in the product model then it has to take care of validation of those properties, and any other model dealing would product then it will have to deal the price and currency. So a better solution to that is to group those properties into one object and that Object is the Value Object.  Extracting this logic means that it is impossible to have somewhere in my application amount without currency or currency without an amount. 
+
+To summarize the idea of Value object is to create objects that group together properties that make sense to exist only together, but do not have an ID. Making this objects immutable avoids the side effects of having an invalid object state.
+
+#### Enumeration
+
+A huge chunk of this paragraph is based on [Enumeration classes by Jimmy Bogard](https://lostechies.com/jimmybogard/2008/08/12/enumeration-classes/).
+
+Enumeration is just a standard enumeration we all know from C#, however DDD suggest that we create a base class for your enumeration types, that provide common enumeration logic. This provides more flexibility , as we can write methods related to them and use inheritance to pass them down the chain. It is more OOP-oriented than the built-in **enum**, and it  allows you to stop using enumerations for control flow.
+
+This of course is not a requirement of DDD, as you could see from Fig. 04, it's not a critical topic and does not matter that much, however this is a good practice and that's why we discuss it.
+
+### Anti-patterns when designing Domain Objects
+
+Using plain POCO like we would typically do when creating an EF Entity is a big mistake, because we are missing on validation and encapsulation. 
+
+Another thing is if Domain objects have unnatural responsibilities that is not *pure* business logic, classical example is sending emails, rather infrastructure related.  
+
+Another critical thing is that communication with external layers is "forbidden", as domain objects are the objects of the lowest level they only communicate between each other.  
+
+Lastly using generic exceptions is something to be avoided. If I am creating an object and it fails the validation I need to know why it failed it. A generic exception "fail validation" is of no use, which part of the validation did it fail? A general solution is to create a specific Exception class for each domain mode, this let us trace much more easier in which domain is the exception raised.
+
+### Domain Services
+
+Domain services contain domain logic, which cannot be put in the domain classes directly, because for example it depends on a few domain models. They do not communicate with the outside world. They should be stateless, and they should have interfaces. Lastly they do not use DTOs rather they should use only the domain models.
+
+A classical example is when we would like to transfer money from one account to another, it just makes no sense that one account object takes another account object and sets properties in it. Another example we could use is when we are processing our shopping cart to create an order, it makes no sense that the shopping cart is able to create orders as this is practically two different bounding contexts.
+
+To summarize we create a domain service when we have business logic which is plain weird to stay inside a domain model. Most importantly there is no Database, Files, Mails, or other infrastructure logic, also no JSON/HTTP or other presentation logic.
+
+
+
