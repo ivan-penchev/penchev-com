@@ -9,7 +9,7 @@ toc: true
 
 # Chapter 2
 ## The Domain Model - Continued
-![contexts](({{ "/assets/img/soft-architectures/ddd/01/ddd-diagram-objects.png" | relative_url }})
+![contexts](({{ "/assets/img/soft-architectures/ddd/02/ddd-diagram-objects.png" | relative_url }})
 
 Fig. 05 DDD diagram for other Domain objects
 
@@ -137,3 +137,118 @@ We implement Repositories similar to Factories using a generic interface, that l
 
 
 
+## The Bounded Context
+
+Is a central pattern both in DDD **and** Microservices, as it defines clearly borders of responsibilities in the application. 
+
+In DDD we aim to separate the different business responsibilities  and from there we can also know the different responsibilities that our application would have for the business. The idea of this "modeling", which is also known as *Strategic Design*, is to shift the focus to dealing with large models by dividing them into logical groups - Bounded Contexts. Where the logical groups should be very explicit about their relationships.
+
+Using Fig. 01 Example of contexts use from Martin Fowler, we can see that each Bounded Context has
+
+* unrelated concepts – such as support ticket in a customer support context
+* and related concepts – products and customers
+
+Different context may have completely different models of common concepts, but may share the same data identity. And here is where the biggest difference shows comparing to the classical approach, where you will have one Customer object with all the properties for the different contexts, and then by knowing you are in this "context", you would have to figure out which properties can you use.
+
+So to sum up, each bounded context has its own domain model, its own factories, its own repositories, its own application layer, and its own persistence layer. But what does "own" mean in a monolith app for example? Well we can just create different folders for the different context and inside of those folder create the context's own components.
+
+Based on all the things we said we could define some general guidelines for Bounded Contexts:
+
+* One bounded context should not use classes meant for another bounded context. For example appointments repository should not use a
+  billing domain model.
+* In a perfect scenario bounded contexts will not be linked with a relationship. Of course this perfect scenario often does not exist, and we do have relaitonships, in those cases we try to maintain only "Ids" where those relationships exist, because if we do so we could more easily transition to microservice architecture.
+* The bounded context should span across all layers of the architecture - Infrastructure, Application layer and so forth. This basically means that there should always be a clear borders for the code, and we  as developers should not try to reach over them.
+
+### Databases in the Bounded Context
+
+So how do we work with Databases in bounded context?
+
+One approach is creating different databases for every context. This allow you to scale easily to microservices, but it may be an overengineering at the beginning, especially since our app has unknown growth and we simply do not know if we will scale. In other words this approach works for big companies, which do not have an application i.e. we are building a new app, and we know that the moment we release to production we will have like 20000 people hitting our app. Foreign keys are fictional without any relationship (like in a microservice approach). 
+
+Another approach is having one database, different interfaces for each context. This would be mean the DbContext is not one, but rather multiple for the different context, but behind the seen they are hitting the same SQL Server/MySQL instance, or even the same database inside those instances (for EF Core , it's not an issue to work with only with the 50 tables in the context, than using all 100 that are in the database). This way you will have the architecture, and just need to migrate the data. Foreign keys are real, but you are not allowed to use domain classes from another context.
+
+And of course we could always just have one database for the whole application. This approach is easier, but the code complexity and business logic may become so mixed up that it will be difficult to extract later. Foreign keys are real, and you are allowed to use domain classes from another context.
+
+Which approach is the best? Tough question. The second one is the middle "golden" ground. We have one DB, so are not worry about "eventual consistency", if a foreign key is inserted but missing we will get an error, we have that as protection, but on the other side it is architecturally split, and this makes it easier to scale up if need arise.
+
+  ### Updating of Data between bounded contexts
+
+A lot of times, probably most of the times, the business logic requires to update objects from multiple contexts. For example: A client makes an appointment, and must pay in the next 3 days. If a payment is not processed, the appointment should be deleted. As you could see this covers both the Appointment Bounded Context and the Payment Bounded Context.  So how can we solve this, without going and gutting inside the different bounding contexts i.e. Apointment going inside Payment and setting some value or Payment(if not processed) going inside Appointment and deleting it? Well here comes the Domain events.
+
+#### Domain Events
+
+![contexts](({{ "/assets/img/soft-architectures/ddd/02/domain-events.png" | relative_url }})
+
+Fig. 06 Example of Domain Events
+
+Instead of mixing business logic from both contexts, you can just fire and forget an event. Then a handler will catch the event and update the other entity. This creates decoupling and better communication between entities or contexts. If you wire the event logic with your ORM – it will be atomic and transactional. This of course is only valid for monolithic applications, for microservices we still need to implement eventual consistency patterns.
+
+To implement Domain Events we just need tree interfaces
+
+```csharp
+C:\Blog\src\Domain\Events\IDomainEvent.cs
+1 namespace Blog.Domain.Events
+2 {
+3     using System;
+4
+5     public interface IDomainEvent
+6     {
+7         DateTime OccurredOn { get; }
+8     }
+9 }
+```
+
+```csharp
+C:\Blog\src\Domain\Events\IEventDispatcher.cs
+1 namespace Blog.Domain.Events
+2 {
+3     using System.Threading.Tasks;
+4
+5     public interface IEventDispatcher
+6     {
+7         Task Dispatch(IDomainEvent domainEvent);
+8     }
+9 }
+```
+
+```csharp
+C:\Blog\src\Domain\Events\IEventHandler.cs
+1 namespace Blog.Domain.Events
+2 {
+3     using System.Threading.Tasks;
+4
+5     public interface IEventHandler<in TEvent>
+6         where TEvent : IDomainEvent
+7     {
+8         Task Handle(TEvent domainEvent);
+9     }
+10 }
+```
+
+
+
+When creating domain event some guidelines could be:
+
+* Use past tense – **AppointedScheduledEvent**
+* Include as little data as possible
+* Do not use domain models
+* Use as many primitive types as possible
+* Use IDs when possible
+* Include full information, only if completely necessary
+* Domain events should be created by the domain layer
+* But the infrastructure layer should know how to dispatch them
+
+###  Borders of responsibilities
+
+We have mentioned that Bounded context should have clear  borders of responsibilities i.e. clear physical isolation, but what are the different types that we could have?
+
+One approach could be using the Same assemblies, but we define different contexts in different folders.
+
+Another approach could be using Separate assemblies, and we define the different contexts in the different assemblies.
+
+And third approach could be Separate processes i.e. Microservices, with separate deployments.
+
+We should always take the pragmatic programmer's approach and start with the easiest one! As the more we separate – the more maintenance
+overhead!
+
+## Summary of the key concept in DDD

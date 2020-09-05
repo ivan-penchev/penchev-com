@@ -254,7 +254,7 @@ We will talk a bit more when we start discussion the Infrastructure, but let's j
 
 A Value Object is an immutable type that is distinguishable only by the state of its properties. That is, unlike an Entity, which has a unique identifier and remains distinct even if its properties are otherwise identical, two Value Objects with the exact same properties can be considered equal. Most importantly value objects are immutable and  cannot be changed once they are created. 
 
-#### Since they are immutable modifying one is conceptually the same as discarding the old one and creating a new one. Frequently, the Value Object can define helper methods (or extensions methods) that assist with such operations. The built-in string object in the .NET framework is a good example of an immutable type. Converting a string in some manner, such as making it uppercase via ToUpper(), doesn’t actually change the original string but rather creates a new string. Likewise, concatenating two strings doesn’t modify either original string, but rather creates a third one.
+Since they are immutable modifying one is conceptually the same as discarding the old one and creating a new one. Frequently, the Value Object can define helper methods (or extensions methods) that assist with such operations. The built-in string object in the .NET framework is a good example of an immutable type. Converting a string in some manner, such as making it uppercase via ToUpper(), doesn’t actually change the original string but rather creates a new string. Likewise, concatenating two strings doesn’t modify either original string, but rather creates a third one.
 
 A classical example to illustrate Value objects is Money
 
