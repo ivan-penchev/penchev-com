@@ -9,7 +9,7 @@ toc: true
 
 # Chapter 2
 ## The Domain Model - Continued
-![contexts](({{ "/assets/img/soft-architectures/ddd/02/ddd-diagram-objects.png" | relative_url }})
+![contexts]({{ "/assets/img/soft-architectures/ddd/02/ddd-diagram-objects.png" | relative_url }})
 
 Fig. 05 DDD diagram for other Domain objects
 
@@ -66,7 +66,8 @@ Business domain objects often become too complex, and a huge thing to remember a
 
 If we look for our simple and base system Car Deals, we can see this:
 
-```CSharp
+```csharp
+
 C:\Car Dealers\Domain\Models\CarAds\CarAd.cs
 ...
 16         internal CarAd(
@@ -79,6 +80,7 @@ C:\Car Dealers\Domain\Models\CarAds\CarAd.cs
 23             bool isAvailable)
 24         {
 ...
+
 ```
 
 We have seven properties for something as simple as a demo system. This is too much!
@@ -177,7 +179,7 @@ A lot of times, probably most of the times, the business logic requires to updat
 
 #### Domain Events
 
-![contexts](({{ "/assets/img/soft-architectures/ddd/02/domain-events.png" | relative_url }})
+![contexts]({{ "/assets/img/soft-architectures/ddd/02/domain-events.png" | relative_url }})
 
 Fig. 06 Example of Domain Events
 

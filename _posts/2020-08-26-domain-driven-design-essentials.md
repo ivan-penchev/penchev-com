@@ -37,7 +37,7 @@ Architecture on Low-Level is when  we take one of those elements, for example th
 ### Elements of an architecture
 *Separation of Concerns* means every internal element of an application should be separated. We could for example have one file `Models.cs` containing all of our Models, but that is not ideal as that file will grew exponentially and maintaining it will be nightmarish. In other words each object should have clear responsibilities. *Encapsulation* on the other hand is a simple mechanism that we use to protect ourselves from creating/modifying objects in invalid state. Doing this leads to less bugs in our code. *Dependency Inversion* is decoupling of dependencies, so if I have a service that depends on the database I should use abstractions - interfaces instead of concrete implementation. This makes all dependencies interchangeable. ; *Explicit Components* is the idea that we know what a class does, what is the role of the class in the whole system, just by opening it - it's very clearly designed/named; *Single Responsibility* of the different software elements; *Don't Repeat Yourself* simply put don't copy/paste the same code in different elements; *Persistence & Infrastructure Ignorance* so my code works without caring what DB we use, or do we deploy this on a Virtual Machine or a k8s cluster; Similarly to the previous principle *Presentation Ignorance* dictates that the UI layer of the element should be easily interchangeable; 
 
-![contexts](({{ "/assets/img/soft-architectures/ddd/01/contexts.png" | relative_url }})
+![contexts]({{ "/assets/img/soft-architectures/ddd/01/contexts.png" | relative_url }})
 
 Fig. 01 Example of contexts use from Martin Fowler
 
@@ -68,7 +68,7 @@ The biggest **pros** of why this is taught and used so widely, is its simplicity
 
 ### The Domain-Driven Design approach
 
-![contexts](({{ "/assets/img/soft-architectures/ddd/01/onion.png" | relative_url }})
+![contexts]({{ "/assets/img/soft-architectures/ddd/01/onion.png" | relative_url }})
 
 Fig. 03 Example of DDD onion architecture
 
@@ -165,7 +165,7 @@ The standard "database identity" is usually integers which are autoincremented. 
 
 Knowing what is the domain model, what are the different equalities, what is identifier, and what are the different strategies for generating an identifier, our next logical step is towards the different type of objects in our domain.
 
-![contexts](({{ "/assets/img/soft-architectures/ddd/01/ddd-diagram-objects.png" | relative_url }})
+![contexts]({{ "/assets/img/soft-architectures/ddd/01/ddd-diagram-objects.png" | relative_url }})
 
 Fig. 04 DDD diagram for Domain objects
 
