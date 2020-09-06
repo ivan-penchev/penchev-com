@@ -1,5 +1,5 @@
 ---
-title: Domain-driven design essentials - Key Concepts Continued
+title: Domain-driven design essentials - Key Concepts (continued)
 author: Ivan Penchev
 date: 2020-09-05 08:22:21 +0100
 categories: [Programming, Software Architectures]
