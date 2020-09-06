@@ -252,3 +252,22 @@ We should always take the pragmatic programmer's approach and start with the eas
 overhead!
 
 ## Summary of the key concept in DDD
+
+We have talked about the origin of Domain Driven Design and how it differs compared to the classical, database centric, approach.
+
+We talked in depth about the **Tactical design** in DDD, which includes patterns such as Entities, Enumaration, ValueObjects, Aggragate Roots and so forth.  These patterns support the creation of the low-level design decisions relating to the implementation of the system’s components and their business logic.
+
+And since the business is the heart of our system, we talked about Bounded Context, which is technically (combined with Ubiquitous Language) the **Strategic design** in DDD. These patterns and practices are a framework for analyzing a company’s business domain and from that extracting the software’s problem domain—i.e., what should be solved by the software. The strategic tools are a robust framework for high-level architectural decisions, including tasks such as decomposing a system into modules and mapping the interaction between them.
+
+Here are eight key points you have to consider when starting with Domain Driven Design
+
+* Focus on the business logic
+* Talk to domain experts
+* The domain model is the application's hearth. And every other layer communicates with it.
+* Classes are encapsulated and validated
+* Communication with outer layers is done through gateways like factories and repositories
+* Bounded contexts define the boundaries of different business “units”
+* Communication between contexts is done through events
+* Break the DDD rules only for performance reasons!
+
+Some of the things that we did not cover include Ubiquitous Language, Bounded Contexts Versus Subdomains, Context Mapping, and Event Storming.
