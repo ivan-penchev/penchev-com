@@ -1,6 +1,6 @@
 ---
 title: A Review of Udacity's Cloud DevOps Engineer nanodegree
-author: Ivan Penchev
+author: ivan
 date: 2020-08-19 17:06:21 +0100
 categories: [Programming]
 tags: [MOOC]

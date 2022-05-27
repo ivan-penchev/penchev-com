@@ -1,6 +1,6 @@
 ---
 title: Software construction (implementation) in Software Engineering
-author: Ivan Penchev
+author: ivan
 date: 2015-03-29 12:30:21 +0100
 categories: [Programming, Software Engineering]
 tags: [Software Engineering]

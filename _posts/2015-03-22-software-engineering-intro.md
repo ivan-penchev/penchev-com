@@ -1,6 +1,6 @@
 ---
 title: Introduction to Software Engineering
-author: Ivan Penchev
+author: ivan
 date: 2015-03-22 12:06:21 +0100
 categories: [Programming, Software Engineering]
 tags: [Software Engineering]

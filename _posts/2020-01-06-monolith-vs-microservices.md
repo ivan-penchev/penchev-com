@@ -1,6 +1,6 @@
 ---
 title: Monolith vs Microservices Architecture
-author: Ivan Penchev
+author: ivan
 date: 2020-01-06 17:06:21 +0100
 categories: [Programming, Software Architectures]
 tags: [Software Architecture, Monolith, Microservices]

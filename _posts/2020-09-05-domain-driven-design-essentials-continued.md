@@ -1,6 +1,6 @@
 ---
 title: Domain-driven design essentials - Key Concepts (continued)
-author: Ivan Penchev
+author: ivan
 date: 2020-09-05 08:22:21 +0100
 categories: [Programming, Software Architectures]
 tags: [Domain-driven design, ASP.NET Core Microservices, DDD, Software Architectures]

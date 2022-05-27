@@ -1,6 +1,6 @@
 ---
 title: Requirements Engineering in Software Engineering
-author: Ivan Penchev
+author: ivan
 date: 2015-03-24 15:55:21 +0100
 categories: [Programming, Software Engineering]
 tags: [Software Engineering]
