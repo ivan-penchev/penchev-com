@@ -23,7 +23,7 @@ jobs:
           ruby-version: 2.7
           bundler-cache: true
       - name: Install Depenencies
-        run: bundle Install
+        run: bundle install
       - name: Jekkyl Build
         run: jekyll build
       - name: Build And Deploy
