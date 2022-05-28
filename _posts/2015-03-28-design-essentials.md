@@ -1,6 +1,6 @@
 ---
 title: Design in Software Engineering
-author: Ivan Penchev
+author: ivan
 date: 2015-03-28 17:02:21 +0100
 categories: [Programming, Software Engineering]
 tags: [Software Engineering]

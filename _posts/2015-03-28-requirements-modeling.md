@@ -1,6 +1,6 @@
 ---
 title: Requirements Modeling Structured Analysis in Software Engineering
-author: Ivan Penchev
+author: ivan
 date: 2015-03-28 10:30:21 +0100
 categories: [Programming, Software Engineering]
 tags: [Software Engineering]

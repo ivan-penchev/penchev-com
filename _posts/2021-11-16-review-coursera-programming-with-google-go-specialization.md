@@ -1,6 +1,6 @@
 ---
 title: A Review of Coursera's / University of California's Programming with Google Go Specialization
-author: Ivan Penchev
+author: ivan
 date: 2021-11-16 08:22:21 +0100
 categories: [Programming, Go]
 tags: [Golang, Go, Reviews]

@@ -1,6 +1,6 @@
 ---
 title: Common C# Traps
-author: Ivan Penchev
+author: ivan
 date: 2019-11-06 10:06:21 +0100
 categories: [Programming, C#]
 tags: [C#, C# Advance]
