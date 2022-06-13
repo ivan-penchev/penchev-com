@@ -1,5 +1,6 @@
 ---
 layout: compress
+<<<<<<< HEAD
 
 # A part of the Favicons
 # v2.0
@@ -7,10 +8,15 @@ layout: compress
 # © 2019 Cotes Chung
 # MIT License
 ---
+=======
+---
+
+>>>>>>> theme/master
 <?xml version="1.0" encoding="utf-8"?>
 <browserconfig>
   <msapplication>
     <tile>
+<<<<<<< HEAD
       <square70x70logo src="{{ site.baseurl }}/assets/img/favicons/ms-icon-70x70.png" />
       <square150x150logo src="{{ site.baseurl }}/assets/img/favicons/ms-icon-150x150.png" />
       <square310x310logo src="{{ site.baseurl }}/assets/img/favicons/ms-icon-310x310.png" />
@@ -18,3 +24,10 @@ layout: compress
     </tile>
   </msapplication>
 </browserconfig>
+=======
+      <square150x150logo src="{{ '/assets/img/favicons/mstile-150x150.png' | relative_url }}" />
+      <TileColor>#da532c</TileColor>
+    </tile>
+  </msapplication>
+</browserconfig>
+>>>>>>> theme/master
