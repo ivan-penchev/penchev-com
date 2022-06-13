@@ -3,12 +3,6 @@ layout: compress
 permalink: '/app.js'
 ---
 
-<<<<<<< HEAD
-/* Registering Service Worker */
-if('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('{{ "/sw.js" | relative_url }}');
-};
-=======
 const keyWaiting = 'sw-waiting';
 const $notification = $('#notification');
 const $btnRefresh = $('#notification .toast-body>button');
@@ -64,4 +58,3 @@ if ('serviceWorker' in navigator) {
     }
   });
 }
->>>>>>> theme/master
