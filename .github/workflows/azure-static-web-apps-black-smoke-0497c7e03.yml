@@ -20,12 +20,14 @@ jobs:
           submodules: true
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 2.7
+          ruby-version: 3
           bundler-cache: true
       - name: Install Depenencies
         run: bundle install
       - name: Jekkyl Build
         run: JEKYLL_ENV=production bundle exec jekyll b
+      - name: Test site
+        run: bundle exec htmlproofer _site --disable-external --check-html --allow_hash_href
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
