@@ -137,6 +137,9 @@ This principle encourages architects to treat external components such as databa
 The idea of being able to attach/detach these services is the ability to be done during deployments. For example, suppose an app’s database is not working correctly due to any issue. In that case, the developer should be able to spin up a new database server restored from a recent backup without any code changes.
 
 ```mermaid
+---
+title: Example of your application using backing services
+---
 flowchart LR
     subgraph Backing Service
         Db[Database]
