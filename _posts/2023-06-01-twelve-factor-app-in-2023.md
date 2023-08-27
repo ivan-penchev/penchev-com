@@ -1,9 +1,9 @@
 ---
 title: "12 Factor App - 12 years later. Still a Commanding 12/12 in the Cloud-Native Era?"
 author: ivan
-date: 2023-06-01 21:22:21 +0100
+date: 2023-08-26 21:22:21 +0100
 categories: [Software Architectures]
-tags: [Software Architectures]
+tags: [Software Architectures, Cloud Native]
 toc: true
 mermaid: true
 ---
