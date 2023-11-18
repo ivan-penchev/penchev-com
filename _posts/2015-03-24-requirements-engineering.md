@@ -140,6 +140,6 @@ Then the impact and cost of the change can be assess:
 
 Modeling is a core activity that ensures effective Requirement Analysis, there are multiple methods used for this activity, and that is what we will examine in the next chapters.
 
-![]({{ "/assets/img/software-engineering/Ch03_IMG_04.jpg" | relative_url }})
+![pic4]({{ "/assets/img/software-engineering/Ch03_IMG_04.jpg" | relative_url }})
 
 Figure 4 in the Next Chapters

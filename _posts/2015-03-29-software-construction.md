@@ -18,7 +18,7 @@ A definition of Construction would be “Transforming design into an executable 
 
 In Iterative/RUP process model, however, Construction refers to a mix of requirements, design, coding and testing activities.  Figure 1, gives us a visual presentation of that.
 
-![]({{ "/assets/img/software-engineering/Ch06_IMG_01.jpg" | relative_url }})
+![pic1]({{ "/assets/img/software-engineering/Ch06_IMG_01.jpg" | relative_url }})
 
 Figure 1 Construction Iterative/RUP
 

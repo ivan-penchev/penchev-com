@@ -16,13 +16,13 @@ A monolithic **software** application is a self-contained, single-tiered softwar
 
 The diagram below represents a monolithic architecture:
 
-![]({{ "/assets/img/soft-architectures/mono-vs-micro/01.png" | relative_url }})
+![pic1]({{ "/assets/img/soft-architectures/mono-vs-micro/01.png" | relative_url }})
 
 In a monolithic **web**-app all the different layers of the app, UI, business, data access etc. are in the same codebase.
 
 We have the *Controller*, then the *Service Layer interface*, *Class* implementations of the interface, the *business logic* goes in the *Object Domain model*, a bit in the Service, Business and the *Repository/DAO [Data Access Object]* classes.
 
-![]({{ "/assets/img/soft-architectures/mono-vs-micro/02.png" | relative_url }})
+![pic2]({{ "/assets/img/soft-architectures/mono-vs-micro/02.png" | relative_url }})
 
 Monolithic apps are simple to build, test & deploy in comparison to a microservices architecture.
 
@@ -93,7 +93,7 @@ Also, since the project is large, it is expected to be managed by several differ
 
 The diagram below represents a microservices architecture:
 
-![]({{ "/assets/img/soft-architectures/mono-vs-micro/03.png" | relative_url }})
+![pic3]({{ "/assets/img/soft-architectures/mono-vs-micro/03.png" | relative_url }})
 
 ### Pros
 
@@ -195,7 +195,7 @@ Segment’s data infrastructure ingests hundreds of thousands of events per seco
 
 When they started with a monolith architecture. They had an *API* that ingested events from different sources and those events were then forwarded to a distributed message queue. The queue based on configuration and settings further moved the event payload to different destination APIs.
 
-![]({{ "/assets/img/soft-architectures/mono-vs-micro/04.png" | relative_url }})
+![pic4]({{ "/assets/img/soft-architectures/mono-vs-micro/04.png" | relative_url }})
 
 In the monolithic architecture, as all the events were moved into a single queue, some of the events often failed to deliver to the destinations and were retried by the queue after stipulated time intervals.
 
@@ -205,7 +205,7 @@ To tackle the queue flooding issue, the engineering team at *Segment* split the 
 
 Every service contained its own individual distributed message queue. This helped cut down the load on a single queue & enabled the system to scale also increasing the throughput.
 
-![]({{ "/assets/img/soft-architectures/mono-vs-micro/05.png" | relative_url }})
+![pic5]({{ "/assets/img/soft-architectures/mono-vs-micro/05.png" | relative_url }})
 
 In this scenario, even if a certain queue got flooded it didn’t impact the event delivery of other services. This is how *Segment* leveraged fault isolation with the microservices architecture.
 

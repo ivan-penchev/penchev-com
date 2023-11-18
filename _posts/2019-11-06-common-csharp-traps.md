@@ -20,7 +20,7 @@ It is present in the System namespace. In C#, the .NET Base Class Library(BCL) h
 Every class in C# is directly or indirectly derived from the Object class. 
 If a Class does not extend any other class then it is the direct child class of Object class and if extends other class then it is an indirectly derived.
 Therefore the Object class methods are available to all C# classes. 
-![]({{ "/assets/img/csharp-in-depth/02_01.png" | relative_url }})
+![pic1]({{ "/assets/img/csharp-in-depth/02_01.png" | relative_url }})
 
 
 To check for reference equality, use ReferenceEquals (returns Boolean)
