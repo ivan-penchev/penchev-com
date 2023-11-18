@@ -13,7 +13,7 @@ toc: true
 With the completion of Requirements Engineering and generation of appropriate Requirement Models, we have a solid understanding of the Problem Domain. 
 We will move our focus to Designing the solution, and we will talk about Design concepts.
 
-![]({{ "/assets/img/software-engineering/Ch05_IMG_01.jpg" | relative_url }})
+![pic1]({{ "/assets/img/software-engineering/Ch05_IMG_01.jpg" | relative_url }})
 
 Figure 1 Design in SE
 
@@ -23,7 +23,7 @@ Before diving into Design, we will answer one common question, what is the diffe
 
 The most direct and short answer is _that it is matter of focus._
 
-![]({{ "/assets/img/software-engineering/Ch05_IMG_02.jpg" | relative_url }})
+![pic2]({{ "/assets/img/software-engineering/Ch05_IMG_02.jpg" | relative_url }})
 
 
 Figure 2 Analysis vs. Design (in depth)
@@ -96,7 +96,7 @@ And finally, while Architecture may conform to Architectural styles, Design may 
 
 Let’s illustrate the following with the example of the Airplane Ticket Reservation System.
 
-![]({{ "/assets/img/software-engineering/Ch05_IMG_03.jpg" | relative_url }})
+![pic3]({{ "/assets/img/software-engineering/Ch05_IMG_03.jpg" | relative_url }})
 
 Figure 3 Architectural and Design
 
@@ -157,7 +157,7 @@ Because Quality attributes are properties across the system, they are set to be 
 
 Let’s consider Security in the context of 4+1 View Model {Please read about this}, see Figure 4.
 
-![]({{ "/assets/img/software-engineering/Ch05_IMG_04.jpg" | relative_url }})
+![pic4]({{ "/assets/img/software-engineering/Ch05_IMG_04.jpg" | relative_url }})
 
 Figure 4 Security applied to 4+1 View Model
 

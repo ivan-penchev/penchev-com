@@ -14,7 +14,7 @@ Chapter 3 examined Requirements Analysis and we briefly talked about the importa
 
 * * *
 
-![]({{ "/assets/img/software-engineering/Ch04_IMG_01.jpg" | relative_url }})
+![pic1]({{ "/assets/img/software-engineering/Ch04_IMG_01.jpg" | relative_url }})
 
 Figure 1 Structured Analysis's position in SE
 
@@ -40,7 +40,7 @@ Always keep in mind two golden rules that should guide your modeling effort: 1) 
 
 There are various method for analysis, two of the most used are **Structured Analysis** and **Object-Oriented Analysis.**
 
-![]({{ "/assets/img/software-engineering/Ch04_IMG_02.jpg" | relative_url }})
+![pic2]({{ "/assets/img/software-engineering/Ch04_IMG_02.jpg" | relative_url }})
 
 Figure 2 Comparison between Analysis methods
 
@@ -80,7 +80,7 @@ There are things that are good to know about ERD such as cardinality, however we
 
 Now that we have the data model, the next step is to see how the data flows in the system and how it changes during it’s flow.
 
-![]({{ "/assets/img/software-engineering/Ch04_IMG_03.jpg" | relative_url }})
+![pic3]({{ "/assets/img/software-engineering/Ch04_IMG_03.jpg" | relative_url }})
 
 Figure 3 ERD for Reservation System
 
@@ -88,7 +88,7 @@ Figure 3 ERD for Reservation System
 
 We first need to talk how to distinguish between Data and Information. In order to do that Figure 4 is introduced based on the Ticket Reservation example.
 
-![]({{ "/assets/img/software-engineering/Ch04_IMG_04.jpg" | relative_url }})
+![pic4]({{ "/assets/img/software-engineering/Ch04_IMG_04.jpg" | relative_url }})
 
 Figure 4 Data vs. Information
 
@@ -101,7 +101,7 @@ DFD serves two purposes:
 
 A DFD is easy to understand since the notation consist of simple shapes. Figure 5 supplies some of the basic notation concepts and applies them to the Ticket Reservation example.
 
-![]({{ "/assets/img/software-engineering/Ch04_IMG_05.jpg" | relative_url }})
+![pic5]({{ "/assets/img/software-engineering/Ch04_IMG_05.jpg" | relative_url }})
 
 Figure 5 DFD Notations and Application
 
@@ -129,7 +129,7 @@ Notification sub-system changes its state to: plenty, running out, or filled
 
 A State Transition Diagram (STD) moves how the system moves from one of these states to the other. Labels up part indicates “events that cause State change” bottom part “System response in change”.
 
-![]({{ "/assets/img/software-engineering/Ch04_IMG_06.jpg" | relative_url }})
+![pic6]({{ "/assets/img/software-engineering/Ch04_IMG_06.jpg" | relative_url }})
 
 Figure 6 STD for Reservation system
 
@@ -143,7 +143,7 @@ One thing that we need to highlight here is that <u>STD existed before UML</u>, 
 
 * Events entering causes activation/deactivation of processes
 
-![]({{ "/assets/img/software-engineering/Ch04_IMG_07.jpg" | relative_url }})
+![pic7]({{ "/assets/img/software-engineering/Ch04_IMG_07.jpg" | relative_url }})
 
 Figure 7 CFD Notation and Example
 
