@@ -287,7 +287,7 @@ func main() {
 
 
 
-# Summary
+## Summary
 
 The article discusses transitioning to Go engineering from languages like C# or Java, emphasizing the shift from object-oriented programming (OOP) to a module-based approach.
 
