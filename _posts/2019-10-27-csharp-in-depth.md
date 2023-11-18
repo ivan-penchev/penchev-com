@@ -98,7 +98,7 @@ class Program
 12
 ```
 This code above would interact with the memory as follows:
-![]({{ "/assets/img/csharp-in-depth/01_01.gif" | relative_url }})
+![pic1]({{ "/assets/img/csharp-in-depth/01_01.gif" | relative_url }})
 
 #### Parameter passing in C#
 As you can see from the example above it is common to pass Parameters of different types to a Function. 
@@ -197,7 +197,7 @@ Basically, it means that any change made to a value that is passed by reference 
 
 
 #### Shallow and Deep Copy
-![]({{ "/assets/img/csharp-in-depth/01_02.png" | relative_url }})
+![pic2]({{ "/assets/img/csharp-in-depth/01_02.png" | relative_url }})
 
 Sometimes we have to copy one variable to another, using the assignment operator, this is often to do some specific calculation on the values and then compare with the original.
 
