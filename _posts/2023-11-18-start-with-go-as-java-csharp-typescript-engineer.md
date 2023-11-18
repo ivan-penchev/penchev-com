@@ -287,3 +287,12 @@ func main() {
 
 
 
+# Summary
+
+The article discusses transitioning to Go engineering from languages like C# or Java, emphasizing the shift from object-oriented programming (OOP) to a module-based approach.
+
+What is OOP? It is the idea about grouping your code into classes.
+ 
+Instead of organizing code into classes, Go focuses on module organization, where functions can be part of a struct or standalone within the appropriate module. 
+
+Properly defined modules, with limited size and interdependencies, allow developers to focus on individual modules without being concerned about external factors, similar to working on a class in OOP.
