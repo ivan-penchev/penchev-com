@@ -27,8 +27,6 @@ jobs:
       - name: Jekkyl Build
         run: JEKYLL_ENV=production bundle exec jekyll b
       - name: Test site
-        run: bundle exec htmlproofer _site --disable-external --check-html --allow_hash_href
-      - name: Test site
         run: |
           bundle exec htmlproofer _site \
             \-\-disable-external=true \
