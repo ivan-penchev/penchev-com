@@ -2,7 +2,7 @@
 title: "Numeral systems and Bit fun with Go"
 author: ivan
 date: 2024-03-02 12:22:21 +0100
-categories: [Programming]
+categories: [Programming, Go]
 tags: [Go, Fundamentals]
 toc: true
 mermaid: true
