@@ -497,6 +497,31 @@ In UTF=16:
 * A less common character like '𐍈' (an ancient letter) needs 4 bytes: 216, 1, 223, 136 (in decimal) or 11011000, 00000001, 11011111, 10001000 (in binary).
 * The emoji '😊' is two units of two bytes each (four bytes total): 55357 and 56842 (in decimal) or 11011000, 00111101 and 11011110, 00111010 (in binary).
 
+[Try the example:](https://go.dev/play/p/md8VOMT7XdN)
+
+```go
+// ASCII examples
+fmt.Printf("The letter 'A' is stored as %d (in decimal) or %08b (in binary).\n", 'A', 'A')
+fmt.Printf("The letter 'B' is stored as %d (in decimal) or %08b (in binary).\n\n", 'B', 'B')
+
+// UTF-8 examples
+fmt.Printf("The letter 'A' is still one byte: %d (decimal) or %08b (binary).\n", 'A', 'A')
+fmt.Printf("The letter 'ñ' is two bytes: %d and %d (in decimal) or %08b and %08b (in binary).\n", 'ñ'>>8&0xFF, 'ñ'&0xFF, 'ñ'>>8&0xFF, 'ñ'&0xFF)
+fmt.Printf("The Chinese character '中' is three bytes: %d, %d, and %d (in decimal) or %08b, %08b, and %08b (in binary).\n", '中'>>16&0xFF, '中'>>8&0xFF, '中'&0xFF, '中'>>16&0xFF, '中'>>8&0xFF, '中'&0xFF)
+emoji := '😊'
+emojiBytes := []byte(string(emoji))
+fmt.Printf("The emoji '😊' is four bytes: %d, %d, %d, %d (in decimal) or %08b, %08b, %08b, %08b (in binary).\n\n", emojiBytes[0], emojiBytes[1], emojiBytes[2], emojiBytes[3], emojiBytes[0], emojiBytes[1], emojiBytes[2], emojiBytes[3])
+
+// UTF-16 examples
+fmt.Printf("The letter 'A' is two bytes: %d and %d (in decimal) or %016b and %016b (in binary).\n", 'A'>>8&0xFF, 'A'&0xFF, 'A'>>8&0xFF, 'A'&0xFF)
+ancientLetter := '𐍈'
+ancientLetterUTF16 := utf16.Encode([]rune{ancientLetter})
+fmt.Printf("A less common character like '𐍈' (an ancient letter) needs 4 bytes: %d, %d, %d, %d (in decimal) or %016b, %016b, %016b, %016b (in binary).\n", ancientLetterUTF16[0]>>8&0xFF, ancientLetterUTF16[0]&0xFF, ancientLetterUTF16[1]>>8&0xFF, ancientLetterUTF16[1]&0xFF, ancientLetterUTF16[0]>>8&0xFF, ancientLetterUTF16[0]&0xFF, ancientLetterUTF16[1]>>8&0xFF, ancientLetterUTF16[1]&0xFF)
+smilingFaceUTF16 := utf16.Encode([]rune{emoji})
+fmt.Printf("The emoji '😊' is two units of two bytes each (four bytes total): %d and %d (in decimal) or %016b and %016b (in binary).\n", smilingFaceUTF16[0], smilingFaceUTF16[1], smilingFaceUTF16[0], smilingFaceUTF16[1])
+```
+{: .nolineno }
+
 
 # Helpful videos
 
