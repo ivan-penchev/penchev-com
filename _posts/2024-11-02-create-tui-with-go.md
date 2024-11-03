@@ -13,7 +13,7 @@ math: true
 > 1. Learn how to access and read system information.
 > 2. Learn how to build a text-based user interface in the Terminal.
 >
-> We would be using two libraries to achieve this goal [shirou/gopsutil](https://github.com/shirou/gopsutil) and [charmbracelet/bubbletea](https://github.com/charmbracelet/bubbletea)
+> We will be using two libraries to achieve this goal [shirou/gopsutil](https://github.com/shirou/gopsutil) and [charmbracelet/bubbletea](https://github.com/charmbracelet/bubbletea)
 > 
 > If you want to skip my ramblings and just see the final solution, the source code is available [here](https://github.com/ivan-penchev/system-monitor-tui).
 {: .prompt-info }
@@ -54,17 +54,17 @@ do
     esac
 done
 ```
-In layman term this is a "menu" that allows the user to choose from a list of actios. Once an action is selected, the corresponding command is executed. While this is a step in the right direction, the interface is purely text-based and can be cumbersome to navigate, especially for more complex interactions.
+In layman's terms, this is a 'menu' that allows the user to choose from a list of actions. Once an action is selected, the corresponding command is executed. While this is a step in the right direction, the interface is purely text-based and can be cumbersome to navigate, especially for more complex interactions.
 
-Enter the Terminal User Interface (TUI). A TUI provides a graphical interface within a text-only terminal environment, improving user interaction by offering elements like menus, buttons, and forms. It bridges the gap between the ease of use found in Graphical User Interfaces (GUIs) and the power and accessibility of command-line interfaces. TUIs are particularly useful when GUIs are not practical.
+While this script is functional, it lacks the user-friendly interface that a TUI can provide. A TUI provides a graphical interface within a text-only terminal environment, improving user interaction by offering elements like menus, buttons, and forms. It bridges the gap between the ease of use found in Graphical User Interfaces (GUIs) and the power and accessibility of command-line interfaces. TUIs are particularly useful when GUIs are not practical.
 
 Moreover, TUIs can offer a better user experience than simple scripts. They can provide immediate feedback, error handling, and a more intuitive navigation system, which can be essential for complex or critical tasks. By automating procedures through a TUI, engineers can ensure that processes are followed accurately and efficiently, minimizing the risk of human error and increasing productivity.
 
 ## Starting up
 
-Let us create a basic skeleton for our project. Usually I would advice you follow the [Standard Go Project Layout](https://github.com/golang-standards/project-layout), but due to the expected size of this project I will just plug everything in one package.
+Let us create a basic skeleton for our project. Usually I would advice you follow the [Standard Go Project Layout](https://github.com/golang-standards/project-layout), but due to the expected size of this project, I will just plug everything into one package.
 
-```bash
+``` bash
 mkdir system-monitor-tui
 cd system-monitor-tui
 go mod init github.com/ivan-penchev/system-monitor-tui
@@ -94,12 +94,12 @@ func printSystemInfo() {
 
 Congrats we did the the equivalent of a "hello world" :)
 
-Let's spice it up.
+With our project structure in place, we can now focus on retrieving system resources using the `gopsutil` library.
 
 ## Getting System Resources using gopsutil
 `gopsutil` is a Go package that provides a set of functions to retrieve system and process metrics from various platforms. It serves as a convenient and cross-platform way to gather information about system resources such as CPU usage, memory usage, disk usage, and more.
 
-In other words with this package we could ran our code on Windows/Linux/Mac and it would still give us the system resources. 
+In other words, with this package, we can run our code on Windows, Linux, and Mac, and it will still provide us with the system resources.
 
 ```bash
 touch systeminfo.go
@@ -276,7 +276,7 @@ func convertBytes(bytes uint64) (string, string) {
 {: file='systeminfo.go'}
 </details>
 
-Now let us update our main.go and print the resulting structs.
+Now that we have our system information functions ready, let's integrate them into our main program.
 
 ```go
 package main
@@ -354,7 +354,7 @@ Lets examine it, to understand it better. this would help us when we have to des
 
 ### Using go routines and channels to refresh information?
 
-> This is a completely optional section if you are familiar with how go routines and channels work
+> This section is optional if you are already familiar with how goroutines and channels work.
 > 
 > The reason I am highlighting this, is because when using [bubbletea](https://github.com/charmbracelet/bubbletea) the framework abstract those concepts away.
 > Yet it is still a good idea to be familiar with  the "magic" under the hood of the framework.
@@ -486,7 +486,7 @@ Thirdly, Bubble Tea includes a rich library of built-in components, such as text
 
 Lastly, Bubble Tea supports concurrency, enabling asynchronous operations. This feature allows background tasks, such as data fetching, to be handled without blocking the UI, ensuring a smooth and responsive user experience.
 
-For our small project we would be using the following packages:
+For our project we would be using the following packages:
 1. [charmbracelet/bubbletea](https://github.com/charmbracelet/bubbletea) - is the core framework for building TUIs in Go.  
 2. [charmbracelet/bubbles](https://github.com/charmbracelet/bubbles) - a collection of reusable components for building TUIs. It includes various elements like text inputs, lists, tables, and more, which can be easily integrated into your application. 
 3. [charmbracelet/lipgloss](https://github.com/charmbracelet/lipgloss) - a package for styling terminal applications. It provides tools to add colors, styles, and layouts to your TUI, allowing you to create visually appealing interfaces. 
@@ -497,6 +497,8 @@ go get github.com/charmbracelet/lipgloss
 go get github.com/charmbracelet/bubbletea
 go get github.com/charmbracelet/bubbles
 ```
+
+With these packages installed, we can start defining our TUI model.
 
 ### Define our Model (struct)
 In order to create our TUI we must define a model.
@@ -516,7 +518,7 @@ type Model interface {
     View() string
 }
 ```
-Of course we need to store some data for our Model. We would be using the following model to store the data for our state:
+We need to store some data for our Model. We will use the following model to store the data for our state:
 
 ```go
 type model struct {
@@ -536,10 +538,11 @@ type TickMsg time.Time
 ```
 {: file='tui.go'}
 
+Next, let's define the view for our model.
 
 ### Define our Model (View)
 
-The view defines how the user interface (UI) is rendered and what elements are displayed. 
+The view defines how the user interface (UI) is rendered and what elements are displayed.
 
 ```go
 func (m model) View() string {
@@ -708,9 +711,11 @@ func ProgressBar(percentage float64, baseStyle lipgloss.Style) string {
 {: file='tui.go'}
 </details>
 
+With our view in place, let's move on to initializing our model.
+
 ### Define our Model (Init)
 The `Init` function is part of the `tea.Model` interface and is called once when the Bubble Tea program starts. 
-It is used to initialize the model and set up any initial commands. If we wish to not perform any initial commands we just return `nil`.
+It is used to initialize the model and set up any initial commands. If we do not wish to perform any initial commands, we simply return nil.
 
 ```go
 // Calls the tickEvery function to set up a command that sends a TickMsg every second.
@@ -734,7 +739,7 @@ func tickEvery() tea.Cmd {
 
 ### Define our Model (Update)
 Once we have initialized our model, and configured how it must look (view), the last thing we must do is handle updates.
-This is where the Update function from the model comes.
+This is where the Update function of the model comes into play.
 
 ```go
 
@@ -843,9 +848,11 @@ func (m model) View() string {
 ```
 {: file='tui.go'}
 
+Finally, let's put everything together and run our TUI application.
+
 ### Putting it all together
 
-As a last step after definig our Model we must run the application, in order to do that we would update our main.go file
+As a final step, after defining our Model, we need to run the application. To do this, we will update our main.go file.
 
 ```go
 
@@ -889,6 +896,8 @@ func main() {
 ```
 {: file='tui.go'}
 
+With our main.go file updated, we can now run our application and see the TUI in action.
+
 If you wired everything correctly, you can run the code with ```go run .```
 The result should look like:
 ![create-tui-with-go]({{ "/assets/img/create-tui-with-go.png" | relative_url }})
@@ -896,10 +905,10 @@ The result should look like:
 
 ## Conclusion
 
-While the software we created is practiaclly "clonining" [htop](https://htop.dev/), it is non the least impressive what you can do with the available libraries for Go.
+While the software we created is practically 'cloning' [htop](https://htop.dev/), it is nonetheless impressive what you can achieve with the available libraries for Go.
 
-We managed to build something that can run on any OS and on any terminal. And it only took an hour to create.
+We have successfully built a cross-platform TUI that provides real-time system monitoring. And it only took an hour to create.
 
 Keep building, keep coding!
 
-> The following post has been hugely inspired by [World Cup 2022 CLI Dashboardq](https://github.com/cedricblondeau/world-cup-2022-cli-dashboard/tree/main)
+> The following post has been hugely inspired by [World Cup 2022 CLI Dashboard](https://github.com/cedricblondeau/world-cup-2022-cli-dashboard/tree/main)
