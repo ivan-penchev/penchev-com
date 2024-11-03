@@ -15,7 +15,7 @@ math: true
 >
 > We would be using two libraries to achieve this goal [shirou/gopsutil](github.com/shirou/gopsutil) and [charmbracelet/bubbletea](github.com/charmbracelet/bubbletea)
 > 
-> If you want to skip my ramblings and just see the final solution, the source code is available [here](github.com/ivan-penchev).
+> If you want to skip my ramblings and just see the final solution, the source code is available [here](https://github.com/ivan-penchev/system-monitor-tui).
 {: .prompt-info }
 
 ## Why a TUI?
@@ -902,4 +902,4 @@ We managed to build something that can run on any OS and on any terminal. And it
 
 Keep building, keep coding!
 
-> The following post has been hugely inspired by [World Cup 2022 CLI Dashboard](https://github.com/cedricblondeau/world-cup-2022-cli-dashboard/tree/main)
+> The following post has been hugely inspired by [World Cup 2022 CLI Dashboardq](https://github.com/cedricblondeau/world-cup-2022-cli-dashboard/tree/main)
