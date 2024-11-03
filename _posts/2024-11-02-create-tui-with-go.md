@@ -13,7 +13,7 @@ math: true
 > 1. Learn how to access and read system information.
 > 2. Learn how to build a text-based user interface in the Terminal.
 >
-> We would be using two libraries to achieve this goal [shirou/gopsutil](github.com/shirou/gopsutil) and [charmbracelet/bubbletea](github.com/charmbracelet/bubbletea)
+> We would be using two libraries to achieve this goal [shirou/gopsutil](https://github.com/shirou/gopsutil) and [charmbracelet/bubbletea](https://github.com/charmbracelet/bubbletea)
 > 
 > If you want to skip my ramblings and just see the final solution, the source code is available [here](https://github.com/ivan-penchev/system-monitor-tui).
 {: .prompt-info }
@@ -356,7 +356,7 @@ Lets examine it, to understand it better. this would help us when we have to des
 
 > This is a completely optional section if you are familiar with how go routines and channels work
 > 
-> The reason I am highlighting this, is because when using [bubbletea](github.com/charmbracelet/bubbletea) the framework abstract those concepts away.
+> The reason I am highlighting this, is because when using [bubbletea](https://github.com/charmbracelet/bubbletea) the framework abstract those concepts away.
 > Yet it is still a good idea to be familiar with  the "magic" under the hood of the framework.
 {: .prompt-info }
 
