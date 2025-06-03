@@ -54,24 +54,28 @@ Asynchronous architecture decouples services. Instead of waiting for a direct re
 
 When you go async, you'll encounter these concepts:
 
-* **Message Brokers:** The backbone of async systems.
-	* **RabbitMQ**: A versatile and mature choice for complex routing.
-	* **Apache Kafka**: A powerhouse for high-volume, real-time data streaming.
-	* **NATS**: A simple, high-performance open-source messaging system for cloud-native applications, IoT, and microservices architectures.
-	* **Google Cloud Pub-Sub / AWS SQS / Azure Queues**: Fully-managed, scalable messaging services from cloud providers.
-* **Events vs. Commands:** Naming matters!
-	* **Command**: *Tells* a service to do something. It's a request.
-		* Example: A UI sends a `CreateUser` command containing the user's email and password to the `User Service`. It expects a single service to act on it.
-	* **Event**: *Notifies* the system that something *happened*. It's an immutable fact.
-		* Example: After the user is saved, the `User Service` publishes a `UserCreated` event. The `Notification Service`, `Analytics Service`, and `CRM Service` can all independently listen for this event to do their jobs, without the `User Service` needing to know they even exist.
-* **Architectural Patterns:**
-	* **CQRS (Command Query Responsibility Segregation)**: Separate your "write" models (Commands) from your "read" models (Queries).
-	* **Event Sourcing**: Store a log of all events that have occurred. This provides a full audit trail.
-	* **Hexagonal Architecture (Ports and Adapters)**: An architectural pattern that decouples the core application logic from external concerns like databases, UI, or message brokers, making it easier to switch between sync and async communication.
-* **Event Schemas:**
-	* **Protobuf (Protocol Buffers)**: A binary serialization format developed by Google. It is language-neutral, platform-neutral, and highly efficient for serializing structured data
-	* **Apache Avro**: A data serialization system that uses a JSON-based schema. A key feature is that the schema is sent along with the data, which can be useful for schema evolution.
-	* **CloudEvents**: A specification for describing event data in a common way. Its goal is to simplify event declaration and delivery across services, platforms, and beyond.
+
+* **Message Brokers**[^brokers]: The backbone of async systems.
+  * **RabbitMQ**[^rabbitmq]: A versatile and mature choice for complex routing.
+  * **Apache Kafka**[^kafka]: A powerhouse for high-volume, real-time data streaming.
+  * **NATS**[^nats]: A simple, high-performance open-source messaging system for cloud-native applications, IoT, and microservices architectures.
+  * **Google Cloud Pub-Sub / AWS SQS / Azure Queues**[^cloud-queues]: Fully-managed, scalable messaging services from cloud providers.
+
+* **Events vs. Commands**[^events-commands]: Naming matters!
+  * **Command**: *Tells* a service to do something. It's a request.
+    * Example: A UI sends a `CreateUser` command containing the user's email and password to the `User Service`. It expects a single service to act on it.
+  * **Event**: *Notifies* the system that something *happened*. It's an immutable fact.
+    * Example: After the user is saved, the `User Service` publishes a `UserCreated` event. The `Notification Service`, `Analytics Service`, and `CRM Service` can all independently listen for this event to do their jobs, without the `User Service` needing to know they even exist.
+
+* **Architectural Patterns**:
+  * **CQRS (Command Query Responsibility Segregation)**[^cqrs]: Separate your "write" models (Commands) from your "read" models (Queries).
+  * **Event Sourcing**[^event-sourcing]: Store a log of all events that have occurred. This provides a full audit trail.
+  * **Hexagonal Architecture (Ports and Adapters)**[^hex-arch]: An architectural pattern that decouples the core application logic from external concerns like databases, UI, or message brokers, making it easier to switch between sync and async communication.
+
+* **Event Schemas**:
+  * **Protobuf (Protocol Buffers)**[^protobuf]: A binary serialization format developed by Google. It is language-neutral, platform-neutral, and highly efficient for serializing structured data.
+  * **Apache Avro**[^avro]: A data serialization system that uses a JSON-based schema. A key feature is that the schema is sent along with the data, which can be useful for schema evolution.
+  * **CloudEvents**[^cloudevents]: A specification for describing event data in a common way. Its goal is to simplify event declaration and delivery across services, platforms, and beyond.
 
 ## The Hybrid Approach: The Best of Both Worlds and The Ultimate Recommendation
 
@@ -124,3 +128,16 @@ graph LR
 
 ## Conclusion
 Choosing between synchronous and asynchronous architecture is not a one-time decision but an ongoing design practice. Start with the simplicity and predictability of synchronous communication. As your system grows and faces challenges with scale, resilience, or complex workflows, introduce asynchronous patterns strategically. By focusing on the problem at hand and understanding the trade-offs, you can build an architecture that is both powerful and maintainable.
+
+[^brokers]: General overview of message brokers: [en.wikipedia.org/wiki/Message_broker](https://en.wikipedia.org/wiki/Message_broker)
+[^rabbitmq]: RabbitMQ official site: [rabbitmq.com](https://www.rabbitmq.com)
+[^kafka]: Apache Kafka official site: [kafka.apache.org](https://kafka.apache.org)
+[^nats]: NATS official site: [nats.io](https://nats.io)
+[^cloud-queues]: Google Cloud Pub-Sub: [cloud.google.com/pubsub](https://cloud.google.com/pubsub) • AWS SQS: [aws.amazon.com/sqs](https://aws.amazon.com/sqs) • Azure Queues: [learn.microsoft.com/azure/storage/queues](https://learn.microsoft.com/azure/storage/queues)
+[^events-commands]: Introduction to "Events vs. Commands": [event-driven.io](https://event-driven.io/en/whats_the_difference_between_event_and_command/)
+[^cqrs]: Fowler on CQRS: [martinfowler.com/bliki/CQRS.html](https://martinfowler.com/bliki/CQRS.html)
+[^event-sourcing]: Fowler on Event Sourcing: [martinfowler.com/eaaDev/EventSourcing.html](https://martinfowler.com/eaaDev/EventSourcing.html)
+[^hex-arch]: Alistair Cockburn’s Hexagonal Architecture: [alistair.cockburn.us/hexagonal-architecture/](https://alistair.cockburn.us/hexagonal-architecture/)
+[^protobuf]: Google’s documentation on Protocol Buffers: [developers.google.com/protocol-buffers](https://developers.google.com/protocol-buffers)
+[^avro]: Apache Avro documentation: [avro.apache.org](https://avro.apache.org)
+[^cloudevents]: CloudEvents specification v.1.0.2: [github.com/cloudevents/spec](https://github.com/cloudevents/spec/blob/v1.0.2/cloudevents/spec.md)
